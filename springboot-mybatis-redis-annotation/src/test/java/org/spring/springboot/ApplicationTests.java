@@ -1,5 +1,6 @@
 package org.spring.springboot;
 
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -9,6 +10,7 @@ import org.spring.springboot.service.CityService;
 import org.spring.springboot.service.impl.CityServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.test.context.junit4.SpringRunner;
 
 /**
@@ -16,6 +18,7 @@ import org.springframework.test.context.junit4.SpringRunner;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@EnableCaching
 public class ApplicationTests {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CityServiceImpl.class);
@@ -55,6 +58,13 @@ public class ApplicationTests {
         cityService.updateCityDescription("北京", "想不想去北京玩玩呢？");
         cityInfo = cityService.getCityByName("北京");
         LOGGER.info("更新描述后查询：" + cityInfo.toString());
+        
+        cityService.cleanCache();
+        LOGGER.info("清空缓存");
+        
+        //从 redis 中取数据, 第三次查询
+        cityInfo = cityService.getCityByName("北京");
+        LOGGER.info("第三次查询：" + cityInfo.toString());
 
     }
 

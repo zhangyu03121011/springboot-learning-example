@@ -28,5 +28,15 @@ public interface CityService {
      *
      */
     void updateCityDescription(String cityName, String description);
+    
+    /**
+     * 情况城市缓存数据
+     * @Title: cleanCache 
+     * @Description: TODO
+     * @param 
+     * @return void
+     * @throws
+     */
+    public void cleanCache();
 
 }
