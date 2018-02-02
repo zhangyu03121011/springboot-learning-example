@@ -65,6 +65,25 @@ public class JedisTest {
 		jedis = RedisUtil.getSentinelPoolJedis();
 	}
 	
+	@Test
+	public void testApi() {
+		System.out.println(jedis.exists("age"));
+		
+		Set<String> keys = jedis.keys("*");
+		for (String string : keys) {
+			String type = jedis.type(string);
+			System.out.println(type);
+			String string2 = jedis.get(string);
+			System.out.println(string2);
+		}
+	}
+	
+	@Test
+	public void testExpire() {
+		jedis.setex("expire", 10,"expire-10s");
+		System.out.println(jedis.get("expire"));
+	}
+	
 	/**
 	 * @Description: 哨兵集群模式
 	 * @DateTime:2018年1月30日 上午10:15:40
